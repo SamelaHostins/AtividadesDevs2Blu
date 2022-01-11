@@ -5,6 +5,9 @@ insert into caminhao (placa,datamanut,dataproxmanut) values ('ABC-1234','2020-10
 insert into caminhao (placa,datamanut,dataproxmanut) values ('WKK-2789','2020-11-08','2022-02-08');
 insert into caminhao (placa,datamanut,dataproxmanut) values ('CKK-7524','2020-11-04','2022-02-04');
 
+--Mostra os dados que foram inseridos na tabela Caminhao
+select * from caminhao;
+
 insert into motorista (nrcnh,nommotorista) values (1992882,'Brenda R. Winder');
 insert into motorista (nrcnh,nommotorista) values (1734336,'José Castro Alves');
 insert into motorista (nrcnh,nommotorista) values (0749800,'Júlio Almeida Barbosa');
