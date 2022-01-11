@@ -1,3 +1,4 @@
+--SCRIPT CRIADO PARA INSERIR (POPULAR) DADOS NAS TABELAS
 
 insert into caminhao (placa,datamanut,dataproxmanut) values ('PCK-5458','2020-12-22','2022-03-22');
 insert into caminhao (placa,datamanut,dataproxmanut) values ('ABC-1234','2020-10-15','2022-01-15');
@@ -5,8 +6,8 @@ insert into caminhao (placa,datamanut,dataproxmanut) values ('WKK-2789','2020-11
 insert into caminhao (placa,datamanut,dataproxmanut) values ('CKK-7524','2020-11-04','2022-02-04');
 
 insert into motorista (nrcnh,nommotorista) values (1992882,'Brenda R. Winder');
-insert into motorista (nrcnh,nommotorista) values (1734336,'José Castro Alves');
-insert into motorista (nrcnh,nommotorista) values (0749800,'Júlio Almeida Barbosa');
+insert into motorista (nrcnh,nommotorista) values (1734336,'JosÃ© Castro Alves');
+insert into motorista (nrcnh,nommotorista) values (0749800,'JÃºlio Almeida Barbosa');
 insert into motorista (nrcnh,nommotorista) values (7744654,'Fernanda Gomes Lima');
 
 insert into notafiscal (nrnota,dataemissao,pesototal,vlrtotal)
