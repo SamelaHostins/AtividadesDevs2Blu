@@ -1,3 +1,4 @@
+*/
 /*DROP TABLE Caminhão CASCADE CONSTRAINTS;
 DROP TABLE Motorista CASCADE CONSTRAINTS;
 DROP TABLE NotaFiscal CASCADE CONSTRAINTS;
@@ -24,7 +25,7 @@ CREATE TABLE NotaFiscal (
     pesoTotal decimal(7,2) NOT NULL,
     vlrTotal decimal(9,2) NOT NULL,
     PRIMARY KEY (nrNota)
-);
+); 
 
 CREATE TABLE ManifestoCarga (
     nmrManifesto integer NOT NULL,
@@ -33,21 +34,29 @@ CREATE TABLE ManifestoCarga (
     qtdVolumes integer NOT NULL,
     vlrTotal decimal(10,2) NOT NULL,
     indSituacao char(01) NOT NULL,
-    dataEmbarque Date NOT NULL,
-    dataSaida Date NOT NULL,
+    dataEmbarque Date,
+    dataSaida Date,
     PRIMARY KEY (nmrManifesto, nrNota)
 );
 
 CREATE TABLE Balanca (
+    regBalanca serial NOT NULL,
     placa varchar(09) NOT NULL,
     nrCnh integer NOT NULL,
     dataHrEntrada Date NOT NULL,
-    dataHrSaida timestamp NOT NULL,
+    dataHrSaida timestamp,
     pesoEntrada integer NOT NULL,
-    pesoSaida integer NOT NULL,
-    PRIMARY KEY (placa, nrCnh, dataHrEntrada, dataHrSaida)
+    pesoSaida integer,
+    PRIMARY KEY (regBalanca)
 );
 
-ALTER TABLE ManifestoCarga ADD FOREIGN KEY (nrNota) REFERENCES NotaFiscal(nrNota);
-ALTER TABLE Balanca ADD FOREIGN KEY (placa) REFERENCES Caminhão(placa);
+CREATE TABLE ManifestoSaida (
+    regBalanca integer NOT NULL,
+    nmrManifesto integer NOT NULL,
+    PRIMARY KEY (regBalanca, nmrManifesto)
+);
+
+ALTER TABLE Balanca ADD FOREIGN KEY (placa) REFERENCES Caminhao(placa);
 ALTER TABLE Balanca ADD FOREIGN KEY (nrCnh) REFERENCES Motorista(nrCnh);
+ALTER TABLE ManifestoSaida ADD FOREIGN KEY (regBalanca) REFERENCES Balanca(regBalanca);
+ALTER TABLE ManifestoSaida ADD FOREIGN KEY (nmrManifesto) REFERENCES ManifestoCarga(nmrManifesto);
