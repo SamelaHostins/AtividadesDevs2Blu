@@ -7,7 +7,7 @@ DROP TABLE ManifestoCarga CASCADE CONSTRAINTS;
 DROP TABLE Balança CASCADE CONSTRAINTS;
 */
 
-CREATE TABLE Caminhão (
+CREATE TABLE Caminhao (
     placa varchar(09) NOT NULL,
     dataManut Date NOT NULL,
     dataProxManut Date NOT NULL,
