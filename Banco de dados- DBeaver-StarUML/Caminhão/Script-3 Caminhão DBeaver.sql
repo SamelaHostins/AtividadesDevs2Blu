@@ -1,42 +1,55 @@
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															--Atualizando uma informaÁ„o do caminh„o 
---Imaginando que foi trocado a placa de um caminh„o que possui uma placa especÌfica
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															--Atualizando uma informa√ß√£o do caminh√£o 
+--Imaginando que foi trocado a placa de um caminh√£o que possui uma placa espec√≠fica
 update caminhao 
 set placa = 'CXX-8844'
 where placa = 'WKK-2789';
 
---select simples da tabela caminh„o
+--select simples da tabela caminh√£o
 --faz com que seja selecionado os indices informados e ordena por placa
---(como placa È String, ent„o por ordem alfabÈtica)
+--(como placa √© String, ent√£o por ordem alfab√©tica)
 select 
-c.placa "Placa", --Pode se criar apelidos para o relatorio, usando "as" ou sÛ as aspas
-to_char (c.datamanut, 'dd/mm/yyyy') as "Data ManutenÁ„o", --to_char (c2.datamanut, 'dd/mm/yyyy') faz com que apareÁa na sequencia certa
-to_char (c.dataproxmanut, 'dd/mm/yyyy') as "Data Prox.ManutenÁ„o"
+c.placa "Placa", --Pode se criar apelidos para o relatorio, usando "as" ou s√≥ as aspas
+to_char (c.datamanut, 'dd/mm/yyyy') as "Data Manuten√ß√£o", --to_char (c2.datamanut, 'dd/mm/yyyy') faz com que apare√ßa na sequencia certa
+to_char (c.dataproxmanut, 'dd/mm/yyyy') as "Data Prox.Manuten√ß√£o"
 from caminhao c 
-order by 1; --n„o precisa informar ascendente (asc) porque n„o È padr„o
-			--opÁ„o descendente (desc) tem que ser declarada
+order by 1; --n√£o precisa informar ascendente (asc) porque n√£o √© padr√£o
+			--op√ß√£o descendente (desc) tem que ser declarada
 
---Qual caminh„o teve a data de manutenÁ„o mais recente
+--Qual caminh√£o teve a data de manuten√ß√£o mais recente
 select c.placa, c.datamanut 
 from caminhao c
 where c.datamanut = (select max(datamanut) from caminhao);
 
---Ordenar· pelo n˙mero do manifesto e quando a data de saÌda for null colocar· a data '01/01/1900'
+--Ordenar√° pelo n√∫mero do manifesto e quando a data de sa√≠da for null colocar√° a data '01/01/1900'
 select 
 m.nmrmanifesto "Manifesto",
 m.nrnota "Nota Fiscal", 
 m.pesototal "Peso Manifesto",
 m.qtdvolumes "Volumes Manifesto",
 to_char (m.dataembarque , 'dd/mm/yyyy') as "Data Embarque",
-case m.indsituacao --Especificando o apelido que aparecer· o valor inserido para "indsituacao", dependendo do caso
+case m.indsituacao --Especificando o apelido que aparecer√° o valor inserido para "indsituacao", dependendo do caso
 when 'E' then 'Embarcado'
 when 'P' then 'Pendente'
-when 'S' then 'SaÌda'
-end "SituaÁ„o",
+when 'S' then 'Sa√≠da'
+end "Situa√ß√£o",
 to_char (coalesce(m.datasaida, '01/01/1900'),'dd/mm/yyyy') as "Data Saida"
 from manifestocarga m
 where m.nmrmanifesto = 1
 
---Usando funÁıes de Strings
+--Usando fun√ß√µes de Strings
 --Buscar parte do nome do motorista usando LIKE
 select * from motorista m
-where m.nomemotorista like 'C%'; --Deve por a inicial da letra seguido do simbolo de %
+where m.nomemotorista like 'J%'; --Deve por a inicial da letra seguido do simbolo de %
+
+--Buscar parte do nome do motorista usando LIKE
+select * from motorista m
+where m.nomemotorista like '%da%';
+
+--Motoristas que tem 'b' no nome
+--Utilizado UPPER para buscar por argumento em mai√∫sculas tamb√©m, 
+--sen√£o s√≥ buscar√° maiusculo ou minusculo dependendo se colocou B ou b
+select * from motorista m 
+where upper(m.nomemotorista) like '%B%';
+--ou use o comando ~~* este busca a letra n√£o importando se for maiuscula ou minuscula
+select* from motorista m2
+where m2.nomemotorista ~~* '%b%' ;
