@@ -8,10 +8,11 @@ import util.Conexao;
 public class Principal {
 
 	public static void main(String[] args) {
+		alterarCarro();
 		lerTodos();
 	}
 	
-	//MÈtodo para ler a lista
+	//M√©todo para ler a lista
 		static void lerTodos() {
 		List<Carro> listaCarro = new Carro().consultaTodos();
 		for(Carro c : listaCarro) {
@@ -22,7 +23,7 @@ public class Principal {
 			System.out.println("");
 		}
 	}
-		//Metodo para consultar um especÌfico
+		//Metodo para consultar um espec√≠fico
 		public void Consultar() {
 			Carro carro = new Carro().consultaPeloId(1);
 			System.out.println(carro.getId());
@@ -32,13 +33,13 @@ public class Principal {
 			System.out.println("");
 		}
 	
-		//Metodo para criar um carro que ser· adicionado no array
+		//Metodo para criar um carro que ser√° adicionado no array
 		public void criar() {
 			Carro carro = new Carro();
 		
 			carro.setPlaca("LZZ8176");
 			carro.setMarca("Volkswagen");
-			carro.setModelo("Fusc„o preto");
+			carro.setModelo("Fusc√£o preto");
 		
 			carro.setPlaca("MFH1978");
 			carro.setMarca("Volkswagen");
@@ -48,8 +49,25 @@ public class Principal {
 				System.out.println("carro salvo com sucesso");
 			}	
 		}
+		
+		//M√©todo para alterar(editar)
+		static void alterarCarro() {
+			Carro carro = new Carro().consultaPeloId(2);//Seleciona a partir da consulta qual quer mudar
+			carro.setPlaca("abc124");//escreve p que quer alterar
+			if(carro.update()) {
+				System.out.println("Carro alterado");
+			}
+		}
 	
-		//MÈtodo que testa a conex„o com o banco de dados
+		//M√©todo para deletar o carro a partir do id
+		static void chamaExcluir() {
+			Carro carro = new Carro();
+			if(carro.deletar(1)) {
+				System.out.println("exclu√≠do com sucesso");
+			}
+		}
+		
+		//M√©todo que testa a conex√£o com o banco de dados
 		static void testeConexao() {
 			if(Conexao.conectar() != null) {
 				System.out.println("conectado");
