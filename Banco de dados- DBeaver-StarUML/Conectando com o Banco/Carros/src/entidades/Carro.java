@@ -48,7 +48,7 @@ public class Carro {
 		this.marca = marca;
 	}
 
-	//M�todo que salva no banco
+	//Método que salva no banco
 	public boolean salvar() {
 		Connection con = Conexao.conectar();	
 		String sql = "insert into carro(placa, marca, modelo) values(?,?,?)";
@@ -65,6 +65,24 @@ public class Carro {
 		return true;
 	}
 	
+
+	//Método que altera(edita) no banco
+	public boolean update() {
+		Connection con = Conexao.conectar();	
+		String sql = "update carro set placa=?, marca =?, modelo =?";
+		sql += "where id = ?";
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setString(1, this.placa);
+			stm.setString(2, this.marca);
+			stm.setString(3, this.modelo);
+			stm.setInt(4, this.id);//Agora estará alterando o id, fzd com que ele mude por isso precisa adicioná-lo
+			stm.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 	
 	//Consulta se o carro existe no banco
 	public Carro consultaPeloId(int id) {
@@ -92,6 +110,7 @@ public class Carro {
 		String sql = "select * from carro";
 		try {
 			PreparedStatement stm = Conexao.conectar().prepareStatement(sql);
+			//Resultset retorna os dados do banco
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()) {
 				Carro carro = new Carro();
@@ -107,6 +126,20 @@ public class Carro {
 		}		
 		return carros;
 	}
+	
+	//Criando método para deletar
+	public boolean deletar(int id) {
+		String sql = "delete from carro where id = ?";
+		try {
+			PreparedStatement stm = Conexao.conectar().prepareStatement(sql);
+			stm.setInt(1,id);
+			stm.execute();		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;		
+	}
+	
 }
 
 
