@@ -65,12 +65,12 @@ public class Matricula {
 	//Metodo que salva uma Matricula no banco
 	public boolean salvarMatricula() {
 		Connection con = Conexao.conectar();	
-		String sql = "insert into matricula(coddisciplina. codaluno, dtmatricula, statusmatricula) values(?,?,?,?)";
+		String sql = "insert into matricula(codaluno, coddisciplina, dtmatricula, statusmatricula) values(?,?,?,?)";
 		
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
-			stm.setInt(1, this.getCodDisciplina());
-			stm.setInt(2, this.getCodAluno());
+			stm.setInt(1, this.getCodAluno());
+			stm.setInt(2, this.getCodDisciplina());
 			stm.setDate(3, this.getDtMatricula());
 			stm.setString(4, String.valueOf(this.getStatusMatricula()));
 			stm.execute();
@@ -85,21 +85,20 @@ public class Matricula {
 	
 	//Metodo para incluir uma matricula que salvará no main
 	public void incluirMatricula() {
-		Matricula ma = new Matricula();
+		Matricula ma = new Matricula();		
+
+		String codAlu = JOptionPane.showInputDialog("Qual o código do Aluno?");
+		ma.setCodAluno(Integer.valueOf(codAlu));
 		
 		String codDis = JOptionPane.showInputDialog("Qual o código da Disciplina?");
 		ma.setCodDisciplina(Integer.valueOf(codDis));
-
-		String codAlu = JOptionPane.showInputDialog("Qual o código do Aluno?");
-		ma.setCodDisciplina(Integer.valueOf(codAlu));
 		
 		String dtMat = JOptionPane.showInputDialog("Informe a data da matrícula");
 		ma.setDtMatricula(Date.valueOf(dtMat));
 		
 		String stMat = JOptionPane.showInputDialog("Informe o status da matrícula");
 		ma.setStatusMatricula(stMat);
-	
-		
+
 		if(ma.salvarMatricula()) {
 			System.out.println("Matricula salva com sucesso");
 		}
@@ -130,30 +129,30 @@ public class Matricula {
 			}
 			
 			//Para consultar uma disciplina no main
-			public void consultarDisciplina() {
-				Matricula ma = new Matricula();.consultaPeloCodigo(1);
-				System.out.println(a.getCodDisciplina());
-				System.out.println(a.getNomDisciplina());
-				System.out.println(a.getNomProfessor());
-				System.out.println(a.getQtdAvaliacoes());
+			public void consultarMatricula() {
+				Matricula ma = new Matricula().consultaPeloCodigo(2,3);
+				System.out.println(ma.getCodDisciplina());
+				System.out.println(ma.getCodAluno());
+				System.out.println(ma.getDtMatricula());
+				System.out.println(ma.getStatusMatricula());
 				System.out.println("");
 			}				
 
 			//Criando o arraylist do banco
-			public List<Disciplina> consultaTodos() {
-				List<Disciplina> disciplinas = new ArrayList<>();
-				String sql = "select * from disciplina";
+			public List<Matricula> consultaTodos() {
+				List<Matricula> matriculas = new ArrayList<>();
+				String sql = "select * from matricula";
 				try {
 					PreparedStatement stm = Conexao.conectar().prepareStatement(sql);
 					//Resultset retorna os dados do banco
 					ResultSet rs = stm.executeQuery();
 					while(rs.next()) {
-						Disciplina di = new Disciplina();
-						di.setCodDisciplina(rs.getInt("coddisciplina"));	
-						di.setNomDisciplina(rs.getString("nomdisciplina"));
-						di.setNomProfessor(rs.getString("nomprofessor"));
-						di.setQtdAvaliacoes(rs.getInt("qtdavaliacoes"));
-						disciplinas.add(di);
+						Matricula di = new Matricula();	
+						di.setCodAluno(rs.getInt("codaluno"));
+						di.setCodDisciplina(rs.getInt("coddisciplina"));
+						di.setDtMatricula(rs.getDate("dtmatricula"));
+						di.setStatusMatricula(rs.getString("statusmatricula"));
+						matriculas.add(di);
 					}
 					
 				} catch (SQLException e) {
@@ -162,33 +161,35 @@ public class Matricula {
 				finally {
 					Conexao.fecharConexao();
 				}
-				return disciplinas;
+				return matriculas;
 			}	
 			
 			//Método para ler a lista no main
-			public void lerTodosDisc() { 
-			List<Disciplina> listaDisciplina = new Disciplina().consultaTodos();
-			for(Disciplina c : listaDisciplina) {
+			public void lerTodosMatri() { 
+			List<Matricula> listaMatricula = new Matricula().consultaTodos();
+			for(Matricula c : listaMatricula) {
+				System.out.println(c.getCodAluno());
 				System.out.println(c.getCodDisciplina());
-				System.out.println(c.getNomDisciplina());
-				System.out.println(c.getNomProfessor());
-				System.out.println(c.getQtdAvaliacoes());
+				System.out.println(c.getDtMatricula());
+				System.out.println(c.getStatusMatricula());
 				System.out.println("");
 			}
 		}
 			
 			
 	//Método que altera(edita) no banco
-	public boolean alterarDisciplina() {
+	public boolean alterarMatricula() {
 		Connection con = Conexao.conectar();	
-		String sql = "update disciplina set nomdisciplina=?, nomprofessor =?, qtdavaliacoes =?";
-		sql += " where coddisciplina = ?";
+		String sql = "update matricula set codaluno=?, coddisciplina =?, dtmatricula =?, statusmatricula =?";
+		sql += " where codaluno =? and coddisciplina =?";
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
-			stm.setString(1, this.getNomDisciplina());
-			stm.setString(2, this.getNomProfessor());
-			stm.setInt(3, this.getQtdAvaliacoes());
-			stm.setInt(4, this.getCodDisciplina());//Agora estará alterando o codigo, fzd com que ele mude por isso precisa adicioná-lo
+			stm.setInt(1, this.getCodAluno());
+			stm.setInt(2, this.getCodDisciplina());
+			stm.setDate(3, this.getDtMatricula());
+			stm.setString(4, this.getStatusMatricula());
+			stm.setInt(5, this.getCodDisciplina());
+			stm.setInt(6, this.getCodAluno());
 			stm.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -199,25 +200,26 @@ public class Matricula {
 		return true;
 	}
 	
-	//Metodo para alterar um aluno a partir de uma nova variável no main
-	public void alterandoDisciplina() {
-		Matricula ma = new Matricula();
-		di = di.consultaPeloCodigo(2);
+	//Metodo para alterar uma matricfula a partir de uma nova variável no main
+	public void alterandoMatricula() {
+		Matricula di = new Matricula();
+		di = di.consultaPeloCodigo(2,3);
 		
-		di.setNomProfessor("Ana Beatriz");
-		if(di.alterarDisciplina()) {
-			System.out.println("Disciplina alterada com sucesso");
+		di.setStatusMatricula("B");
+		if(di.alterarMatricula()) {
+			System.out.println("Matricula alterada com sucesso");
 		}else {
-			System.out.println("Problema ao alterar a Disciplina");
+			System.out.println("Matricula ao alterar a Disciplina");
 		}
 	}
 
-	//Metodo que exclui um Auno no banco
-	public boolean excluirMatricula(int coddisciplina) {
-		String sql = "delete from disciplina where coddisciplina = ?";
+	//Metodo que exclui uma matricula no banco
+	public boolean excluirMatricula(int codaluno, int coddisciplina) {
+		String sql = "delete from matricula where codaluno = ? and coddisciplina =?";
 		try {
 			PreparedStatement stm = Conexao.conectar().prepareStatement(sql);
-			stm.setInt(1,coddisciplina);
+			stm.setInt(1,codaluno);
+			stm.setInt(2,coddisciplina);
 			stm.execute();		
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -231,7 +233,7 @@ public class Matricula {
 	//Metodo para excluir no main
 	public void chamaExcluir() {
 		Matricula ma = new Matricula();
-		if(ma.excluirMatricula(1)) {
+		if(ma.excluirMatricula(3,0)) {
 			System.out.println("excluído com sucesso");
 		}
 	}	
