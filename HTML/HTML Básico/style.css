@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+*{
+ margin: 0; 
+ padding: 0;
+
+}
+
+/* Header */
+header{
+    position: relative;
+    height: auto;
+    padding: 10px 30px;
+}
+
+/* deve usar "#" para chamar o id */
+
+    #logo{
+        /* Deve dizer q é um bloco se quiser que ele seja escrito como bloco */
+        display: block;
+        border-bottom: 2px solid #111;
+        height: 80px;
+        line-height: 80px;
+    }
+
+    #logo:after{
+        display: block ;
+        clear: both;
+        content: "";
+    }
+
+    .logo-topo{
+
+        display: block;
+        float: left;
+        width: 50px;
+        margin: 20px;
+       
+
+    }
+
+    
