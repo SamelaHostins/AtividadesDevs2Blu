@@ -1,0 +1,144 @@
+@charset "UTF-8";
+
+*{
+ margin: 0; 
+ padding: 0;
+
+}
+
+/* Header */
+header{
+    position: relative;
+    height: auto;
+    padding: 10px 0;
+}
+
+/* deve usar "#" para chamar o id */
+
+#topo-site-menu{
+    border-bottom: 2px solid #111;
+    width: 100vw;
+    
+}
+
+#topo-site-menu:after{
+    display: block;
+    clear: both;
+    content:"";
+}
+
+
+    #logo{
+        /* Deve dizer q é um bloco se quiser que ele seja escrito como bloco */
+        display: block;
+        height: 80px;
+        line-height: 80px;
+        width: 50%;
+        float: left;
+    }
+
+    #logo:after{
+        display: block ;
+        clear: both;
+        content: "";
+    }
+
+    .logo-topo{
+        display: block;
+        float: left;
+        width: 50px;
+        margin: 20px;
+    }
+
+    body{
+        background-color: rgba(240, 255, 255, 0.973);
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+    
+    /* Menu */
+    #menu-horizontal{
+        display: block;
+        float: right;
+        height: 60px;
+        line-height: 60px;
+        width: 40%;
+    }
+
+    #menu-horizontal ul li{
+        display: inline-block;
+        width: 60px;
+        padding: 5px;
+        text-align: center;
+        list-style: none;
+    }
+
+    #menu-horizontal ul li a{
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        height: 100%;
+        font-size: 20px;
+        color: #111;
+    }
+
+    #menu-horizontal ul li a:hover{
+        background-color: bisque;
+        color: #fff;
+        font-size: 21px;
+        transition: all .5s;
+    }
+
+    #header-do-site{
+        display: block;
+        background-color: bisque;
+        width: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 150px;
+        text-align: center;
+    }
+
+    #topo-destaque{
+        padding-top: 10em;
+        padding-bottom: 10em;
+        background-color: bisque;
+        text-align: center;
+        background: url(https://www.maxtotalalimentos.com.br/img/seo/9/484/cachorro-viralata-10-motivos-para-adotar.jpg) ;
+        background-position: 50% 40%;  
+    }
+
+    .wrapper{
+        width: 80vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #topo-destaque-content{
+        font-weight: 800;
+    }
+
+    #art-destaque{
+        padding-top: 1.5em;
+        padding-bottom: 1.5em;
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: bisque;
+    }
+
+    #art-destaque h2{
+    font-size: 30px;
+    font-style: italic;
+    text-shadow: #fff;
+    }
+
+    main{
+        min-height: 17.5vh;
+    }
+
+    /* Footer */
+    footer{
+        padding-top: 3.5em;
+        background-color: bisque;
+    }
